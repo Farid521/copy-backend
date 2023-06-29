@@ -19,6 +19,7 @@ const dataSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: { type: Date, expires: 1800, default: Date.now },
 });
 
 const Data = mongoose.model("Data", dataSchema);

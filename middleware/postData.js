@@ -19,21 +19,28 @@ const processMiddleware = async function (req, res, next) {
   // data insert
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth() + 1; 
+  const month = now.getMonth() + 1;
   const day = now.getDate();
+  const hour = now.getHours();
+  const minuete = now.getMinutes();
+  const second = now.getSeconds();
   const { message } = req.body;
-// 
+  //
   try {
     const generatedData = new Data({
-      date: `${day}-${month}-${year}`,
+      date: `${day}-${month}-${year}${hour}:${minuete}:${second}`,
       id: Math.floor(1000 + Math.random() * 9009),
-      generatedId: Math.floor(1000 + Math.random() * 9000),
+      generatedId: Math.floor(100000 + Math.random() * 1000000),
       message: message || "hello world",
     });
 
     await generatedData.save();
 
-    console.log(req.body);
+    console.log(generatedData);
+    
+    res.json({
+      generatedId: generatedData.generatedId,
+    });
     next();
     // error handling
   } catch (error) {

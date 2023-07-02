@@ -37,7 +37,7 @@ const processMiddleware = async function (req, res, next) {
     await generatedData.save();
 
     console.log(generatedData);
-    
+
     res.json({
       generatedId: generatedData.generatedId,
     });

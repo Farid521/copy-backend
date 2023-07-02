@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
-const postReceiver = require("./middleware/postData");
-const resultsData = require("./middleware/results");
+const postReceiver = require("./middleware/clipboard/postData");
+const resultsData = require("./middleware/clipboard/results");
+const qrGenerator = require("./middleware/qr-generator/mainProcces");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -24,6 +25,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/post", postReceiver);
+
+app.post("/qr", qrGenerator);
 
 app.post("/results", resultsData);
 

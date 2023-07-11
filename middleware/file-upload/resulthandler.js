@@ -1,7 +1,11 @@
-const mongoose = require("mongoose");
-const Data = require("../../models/copyModels");
+const admin = require("firebase-admin");
+const urlGenerator = require("./url");
+const Data = require("../../models/firebaseDownload");
+const { default: mongoose } = require("mongoose");
 
-const processMiddleware = async function (req, res, next) {
+const saver = async (fileNameData, fileDownloadLinks) => {
+  // const url = urlGenerator(fileData);
+
   // db connect
   try {
     await mongoose.connect(
@@ -24,32 +28,28 @@ const processMiddleware = async function (req, res, next) {
   const hour = now.getHours();
   const minuete = now.getMinutes();
   const second = now.getSeconds();
-  const { message } = req.body;
-  //
+
   try {
     const generatedData = new Data({
       date: `${day}-${month}-${year}${hour}:${minuete}:${second}`,
-      id: Math.floor(1000 + Math.random() * 9009),
+      id: Math.floor(100000 + Math.random() * 1000000),
       generatedId: Math.floor(100000 + Math.random() * 1000000),
-      message: message || "hello world",
+      fileName: fileNameData,
+      downloadLinks: fileDownloadLinks,
     });
-
-    await generatedData.save();
 
     console.log(generatedData);
 
-    res.json({
-      generatedId: generatedData.generatedId,
-    });
-    next();
-    // error handling
-  } catch (error) {
-    console.error("Gagal menyimpan data:", error);
-    next(error);
+    await generatedData.save();
+
+    console.log("succes");
+    return generatedData;
+  } catch (err) {
+    console.log("error dalam save data ke database : " + err);
   } finally {
-    // Tutup koneksi setelah operasi selesai
     mongoose.disconnect();
+    console.log('disconected')
   }
 };
 
-module.exports = processMiddleware;
+module.exports = saver;

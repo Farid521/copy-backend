@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-const Data = require("../../models/copyModels");
+const imageBucket = require("../../models/firebaseDownload");
 
-const resultsData = async function (req, res, next) {
-  // db connect
+const imageSearch = async (req, res, next) => {
+  const { imageRequest } = req.body;
+
+  // db conn
   try {
     await mongoose.connect(
       "mongodb+srv://Farid521:yosinjin521@cluster0.tw3aobv.mongodb.net/?retryWrites=true&w=majority",
@@ -15,24 +17,19 @@ const resultsData = async function (req, res, next) {
   } catch (error) {
     console.error("Gagal terhubung ke basis data MongoDB:", error);
   }
-  const { requestedData } = req.body;
+
+  //   image search
 
   try {
-    const result = await Data.find({ generatedId: requestedData });
+    const result = await imageBucket.find({ generatedId: imageRequest });
     console.log(result);
-    res.json(result);
-
-    next();
+    res.json(result)
   } catch (err) {
-    res
-      .json({
-        status: "not found",
-      })
-      .status(404);
-    next(err);
-  } finally {
-    mongoose.disconnect();
+    console.log(err);
+    res.json({status: "error"}).status(500)
   }
+  mongoose.disconnect()
+  next()
 };
 
-module.exports = resultsData;
+module.exports = imageSearch

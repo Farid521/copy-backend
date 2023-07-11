@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
-const Data = require("../../models/copyModels");
+const dataModel = require("../../models/firebaseDownload");
 
-const processMiddleware = async function (req, res, next) {
+// mendokumenttasikan file ke database mongodb
+
+const fileUpload = async (fileNameParams, fileLink) => {
   // db connect
   try {
     await mongoose.connect(
@@ -24,32 +26,24 @@ const processMiddleware = async function (req, res, next) {
   const hour = now.getHours();
   const minuete = now.getMinutes();
   const second = now.getSeconds();
-  const { message } = req.body;
-  //
+
   try {
-    const generatedData = new Data({
+    const generatedData = new dataModel({
       date: `${day}-${month}-${year}${hour}:${minuete}:${second}`,
       id: Math.floor(1000 + Math.random() * 9009),
       generatedId: Math.floor(100000 + Math.random() * 1000000),
-      message: message || "hello world",
+      fileName: fileNameParams,
+      downloadLinks: fileLink,
     });
 
     await generatedData.save();
 
-    console.log(generatedData);
-
-    res.json({
-      generatedId: generatedData.generatedId,
-    });
-    next();
-    // error handling
+    console.log("saving download documentation succes");
   } catch (error) {
-    console.error("Gagal menyimpan data:", error);
-    next(error);
+    console.log("error while saving data");
   } finally {
-    // Tutup koneksi setelah operasi selesai
     mongoose.disconnect();
   }
 };
 
-module.exports = processMiddleware;
+module.exports = fileUpload;

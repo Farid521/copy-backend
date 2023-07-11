@@ -98,20 +98,14 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
 
     console.log(`url adalah : ${url}`);
     const userUrl = url[0];
-
-    setTimeout(() => {
-      console.log("Timer telah selesai");
-
-      // Menghapus file setelah 5 menit (300000 milidetik)
-      fileUpload
-        .delete()
-        .then(() => {
-          console.log("File berhasil dihapus.");
-        })
-        .catch((error) => {
-          console.log("Error menghapus file:", error);
-        });
-    }, 3000);
+    fileUpload
+      .delete()
+      .then(() => {
+        console.log("File berhasil dihapus.");
+      })
+      .catch((error) => {
+        console.log("Error menghapus file:", error);
+      });
 
     return await res.status(200).json({ url: userUrl });
   });

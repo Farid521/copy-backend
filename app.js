@@ -94,7 +94,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
       expires: Date.now() + 1000 * 60 * 30,
     });
 
-    resultHandler(fileName, url);
+    await resultHandler(fileName, url);
 
     console.log(`url adalah : ${url}`);
     const userUrl = url[0];

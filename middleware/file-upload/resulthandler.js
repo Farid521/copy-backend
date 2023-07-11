@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 const urlGenerator = require("./url");
 const Data = require("../../models/firebaseDownload");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const saver = async (fileNameData, fileDownloadLinks) => {
   // const url = urlGenerator(fileData);

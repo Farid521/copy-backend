@@ -69,7 +69,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const fileName = Date.now() + "-" + file.originalname;
+  const fileName = file.originalname + "-" + Date.now();
   const destinationPath = `user-file/${fileName}`;
   const fileUpload = bucket.file(fileName);
 
@@ -111,7 +111,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
         .catch((error) => {
           console.log("Error menghapus file:", error);
         });
-    }, 1800000);
+    }, 3000);
 
     return await res.status(200).json({ url: userUrl });
   });

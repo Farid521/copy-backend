@@ -111,7 +111,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
           error
         );
       }
-    }, 30 * 60 * 1000);
+    }, 3 * 60 * 1000);
 
     return await res.status(200).json({ url: userUrl });
   });

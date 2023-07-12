@@ -69,7 +69,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const fileName = file.originalname + "-" + Date.now();
+  const fileName = Date.now() + file.originalname;
   const destinationPath = `user-file/${fileName}`;
   const fileUpload = bucket.file(fileName);
 

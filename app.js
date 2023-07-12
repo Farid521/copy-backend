@@ -140,6 +140,7 @@ app.post("/results", resultsData);
 
 app.post('/dbtrigger', (req,res) => {
   console.log(req.body)
+  res.status(20).send('succes')
 })
 
 // Handler untuk permintaan POST pada path "/delete"

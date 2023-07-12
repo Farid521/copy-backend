@@ -99,6 +99,10 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
     console.log(`url adalah : ${url}`);
     const userUrl = url[0];
 
+    setTimeout(() => {
+      console.log('hello world hhhhhhhhhhhhhh')
+    }, 3000)
+
     setTimeout(async () => {
       console.log("Timer telah selesai");
 

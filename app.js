@@ -138,6 +138,10 @@ app.post("/imageSearch", imageSearchHandler);
 // Menggunakan middleware resultsData
 app.post("/results", resultsData);
 
+app.post('/dbtrigger', (req,res) => {
+  console.log(req.body)
+})
+
 // Handler untuk permintaan POST pada path "/delete"
 // Menggunakan middleware remover
 app.post("/delete", remover);

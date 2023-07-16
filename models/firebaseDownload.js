@@ -23,10 +23,7 @@ const downloadFileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     required: true,
   },
-  ttl: {
-    type: Date,
-    expires: "3m", // Tambahkan opsi expires dengan nilai '3m' untuk 3 menit
-  },
+  createdAt: { type: Date, expires: 1800, default: Date.now },
 });
 
 const downloadModel = mongoose.model("downloadModel", downloadFileSchema);

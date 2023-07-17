@@ -12,7 +12,7 @@ const admin = require("firebase-admin");
 
 // Inisialisasi aplikasi Express
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware untuk memproses data JSON
 app.use(bodyParser.json());
